@@ -10,21 +10,11 @@ import {
   MenuList,
   MenuItem,
   Avatar,
-  Tooltip,
-  Progress,
 } from "@material-tailwind/react";
 import {
   EllipsisVerticalIcon,
-  ArrowUpIcon,
 } from "@heroicons/react/24/outline";
 
-import {
-  statisticsCardsData,
-  statisticsChartsData,
-  projectsTableData,
-  ordersOverviewData,
-} from "@/data";
-import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../appContext/AppContext";
 import { db } from "../../config.firebase/firebase-config";
@@ -35,7 +25,7 @@ import { useRecoilState } from 'recoil';
 import { currentRoomId } from '../../atom/atom';
 // import { SingleChat } from "./SingleChat";
 
-export function Home() {
+export function ChatView() {
   const { user, userData } = useContext(AppContext);
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
@@ -189,9 +179,9 @@ export function Home() {
           </CardHeader>
           <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
             <table className="w-full min-w-[640px] table-auto">
-              <thead>
+            <thead>
                 <tr>
-                  {["chats"].map(
+                  {["chats", "status"].map(
                     (el) => (
                       <th
                         key={el}
@@ -220,7 +210,7 @@ export function Home() {
                     return (
                       <tr key={uid}>
                         <td className={className}>
-                          <div className="flex items-center gap-4" onClick={() => (selectFriend(user))} >
+                          <div className="flex items-center gap-4"   user={user} onClick={() => (selectFriend(user))} >
                             <Avatar src={profilePhotoURL} alt='' size="sm" />
                             <Typography
                               variant="small"
@@ -264,4 +254,4 @@ export function Home() {
   );
 }
 
-export default Home;
+export default ChatView;

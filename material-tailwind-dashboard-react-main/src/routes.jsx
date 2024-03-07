@@ -5,9 +5,13 @@ import {
   InformationCircleIcon,
   ServerStackIcon,
   RectangleStackIcon,
+  ChatBubbleLeftIcon,
+  CalendarIcon,
+  GlobeEuropeAfricaIcon
 } from "@heroicons/react/24/solid";
 import { Home, Profile, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
+import ChatView from "./pages/dashboard/ChatView";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -24,13 +28,19 @@ export const routes = [
         element: <Home />,
       },
       {
+        icon: <ChatBubbleLeftIcon {...icon} />,
+        name: "chats",
+        path: "/chats/:id?",
+        element: <ChatView />,
+      },
+      {
         icon: <UserCircleIcon {...icon} />,
         name: "profile",
         path: "/profile",
         element: <Profile />,
       },
       {
-        icon: <TableCellsIcon {...icon} />,
+        icon: <GlobeEuropeAfricaIcon {...icon} />,
         name: "groups",
         path: "/tables",
         element: <Tables />,
@@ -38,6 +48,12 @@ export const routes = [
       {
         icon: <InformationCircleIcon {...icon} />,
         name: "notifications",
+        path: "/notifications",
+        element: <Notifications />,
+      },
+      {
+        icon: <CalendarIcon {...icon} />,
+        name: "Calendar",
         path: "/notifications",
         element: <Notifications />,
       },

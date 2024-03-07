@@ -7,7 +7,6 @@ import {
 } from "@material-tailwind/react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import React, { useContext, useState } from 'react';
-// import { Meta } from '../components/Meta/Meta';
 import {format} from 'date-fns';
 import { registerUser } from "@/services/auth.service.js";
 import {createUserProfile, getUserByUid } from "@/services/users.service";
@@ -15,14 +14,15 @@ import { AppContext } from "@/appContext/AppContext.js";
 
 
 export function SignUp() {
+  
   const { setContext } = useContext(AppContext);
   const [form, setForm] = useState({
     uid: '',
     username: '',
     email: '',
-    phoneNumber: '',
     password: '',
     confirmPassword: '',
+    phoneNumber: '',
     role: 'user',
     image: '',
     status: '',
@@ -37,45 +37,27 @@ export function SignUp() {
   const updateForm = (prop) => (e) => {
     setForm({ ...form, [prop]: e.target.value });
   };
-
-  function validateDetails (phoneNumber) {
-    const phoneNumberRegex = /^\d{10}$/;
-    if (!phoneNumberRegex.test(phoneNumber)) {
-      setErrorMessage('Phone number must be of 10 digits');
-      return false;
-    }
-    return true;
-  };
-
+  
   const register = async (event) => {
+    console.log("Attempting registration...");
     event.preventDefault();
-
     if (form.username.trim() === '') {
       setErrorMessage('Username cannot be empty');
       return;
     }
-
+    
     if (form.password.length < 6) {
       setErrorMessage('Password must be at least 6 characters long');
       return;
     }
-
+    
     try {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!emailRegex.test(form.email)) {
         setErrorMessage('Please enter a valid email address.');
         return;
       }
-
-      if (form.password !== form.confirmPassword) {
-        setErrorMessage('Password and Confirm Password do not match');
-        return;
-      }
-
-      if (!validateDetails(form.phoneNumber)) {
-        setErrorMessage('Phone Number number must be of 10 digits');
-        return;
-      }
+      console.log("Attempting registration 2 ...");
 
       const user = await getUserByUid(form.username);
       if (user.exists()) {
@@ -89,8 +71,8 @@ export function SignUp() {
         credentials.user.uid,
         form.username,
         form.email,
-        form.phoneNumber,
         form.password,
+        form.phoneNumber,
         form.role,
         form.image,
         form.status,
@@ -129,7 +111,7 @@ export function SignUp() {
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Your email
             </Typography>
-            <Input value={form.email} onChange={updateForm("email")} type="text"
+            <Input value={form.email} onChange={updateForm("email")} type="text" id="email" name="email"
               size="lg"
               placeholder="name@mail.com"
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -138,12 +120,27 @@ export function SignUp() {
               }}
             />
           </div>
+                    {/* Password */}
+                    <div className="mb-1 flex flex-col gap-6">
+            <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
+              Your password
+            </Typography>
+            <Input value={form.password} onChange={updateForm("password")} type="text" id="password" name="password"
+              size="lg"
+              placeholder="username"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+            />
+          </div>
+
           {/* Username */}
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Your username
             </Typography>
-            <Input value={form.username} onChange={updateForm("username")} type="text"
+            <Input value={form.username} onChange={updateForm("username")} type="text" id="username" name="username"
               size="lg"
               placeholder="username"
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -171,7 +168,7 @@ export function SignUp() {
             }
             containerProps={{ className: "-ml-2.5" }}
           />
-          <Button className="mt-6" fullWidth>
+          <Button onClick={register} className="mt-6" fullWidth>
             Register Now
           </Button>
 

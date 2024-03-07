@@ -20,7 +20,7 @@ export const getUserByUid = (uid) => {
   return get(ref(db, `users/${uid}`));
 };
 
-export const createUserProfile = (uid, username, email, phoneNumber, password, role = 'user', status, friendsList, sentRequests, pendingRequests ) => {
+export const createUserProfile = (uid, username, email, password, phoneNumber, role = 'user', status, friendsList, sentRequests, pendingRequests ) => {
   const readableDate = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
   return set(ref(db, `users/${uid}`), {
@@ -29,7 +29,6 @@ export const createUserProfile = (uid, username, email, phoneNumber, password, r
     email,
     password,
     phoneNumber,
-    createdOnReadable: readableDate,
     role,
     status,
     friendsList,
@@ -38,6 +37,7 @@ export const createUserProfile = (uid, username, email, phoneNumber, password, r
     profilePhotoURL: '',
     fileURL: '',
     location: '',
+    createdOnReadable: readableDate,
   });
 };
 
