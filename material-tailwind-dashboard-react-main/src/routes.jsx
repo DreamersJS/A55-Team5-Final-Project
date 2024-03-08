@@ -7,7 +7,8 @@ import {
   RectangleStackIcon,
   ChatBubbleLeftIcon,
   CalendarIcon,
-  GlobeEuropeAfricaIcon
+  GlobeEuropeAfricaIcon,
+  UserGroupIcon,
 } from "@heroicons/react/24/solid";
 import { Home, Profile, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
@@ -40,7 +41,7 @@ export const routes = [
         element: <Profile />,
       },
       {
-        icon: <GlobeEuropeAfricaIcon {...icon} />,
+        icon: <UserGroupIcon {...icon} />,
         name: "groups",
         path: "/tables",
         element: <Tables />,
